@@ -9,15 +9,17 @@ import java.util.List;
 @Table(name = "Cleaners")
 public class Cleaner {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String name;
     private long phone_no;
     private String email;
     private String cityOfService;
     private double rating;
-
     @Transient
-    private HashSet<Customer> customers = new HashSet<Customer>();
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Customer.class)
+    private List<Customer> customers = new ArrayList<>();
+
 
     public Cleaner(int id, String name, long phone_no, String email, String cityOfService, double rating) {
         this.id = id;
@@ -33,7 +35,7 @@ public class Cleaner {
 
 
     public List<Customer> getCustomers() {
-        return customers.stream().toList();
+        return customers;
     }
 
     public boolean bookService(Customer customer) {

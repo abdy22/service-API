@@ -38,5 +38,21 @@ public class APIController {
         customerService.addCustomer(customer);
     }
 
+    @GetMapping(value = "/Cleaners/city")
+    @ResponseBody
+    public List<Cleaner> getCleanerByCity(@RequestParam String cityName) {
+        return cleanerService.getCleanersByCity(cityName);
+    }
+
+    @PostMapping(value = "/DeleteCleaner")
+    public void deleteCleaner(@RequestParam int id) {
+        cleanerService.deleteCleaner(id);
+    }
+
+    @PostMapping(value = "/BookCleaning")
+    public boolean bookCleaning(@RequestParam int cleanerID, @RequestParam int customerID){
+        return cleanerService.bookService(cleanerID,customerID);
+    }
+
 
 }

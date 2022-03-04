@@ -1,22 +1,22 @@
 package com.cleaningservice.co.Model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Customer")
 public class Customer {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String name;
     private String cityOfResidence;
     private long phone_no;
     private String email;
-    @Transient
-    private Cleaner cleaner;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Cleaner.class)
+    private List<Cleaner> cleaners = new ArrayList<>();
 
     public Customer(int id, String name, String cityOfResidence, long phone_no, String email) {
         this.id = id;
@@ -26,12 +26,14 @@ public class Customer {
         this.email = email;
     }
 
-    public Cleaner getCleaner() {
-        return cleaner;
+    public List<Cleaner> getCleaner() {
+        return cleaners;
     }
 
     public void setCleaner(Cleaner cleaner) {
-        this.cleaner = cleaner;
+        if (!cleaners.contains(cleaner)) {
+            cleaners.add(cleaner);
+        }
     }
 
     public Customer() {

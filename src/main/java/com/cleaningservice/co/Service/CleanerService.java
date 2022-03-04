@@ -7,6 +7,7 @@ import com.cleaningservice.co.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @Service
@@ -32,27 +33,23 @@ public class CleanerService {
     public void AddCleaner(Cleaner cleaner) {
         repository.save(cleaner);
     }
+    public List<Cleaner> getCleanersByCity(String cityName) {
+        return repository.findByCityOfService(cityName);
+    }
 
-    public boolean bookService(Cleaner cleaner,Customer customer) {
-        Cleaner c = repository.findById(cleaner.getId()).orElse(null);
+    public boolean bookService(int cleanerID,int customerID) {
+        Cleaner c = repository.findById(cleanerID).orElse(null);
+        Customer customer = customerRepository.findById(customerID).orElse(null);
 
-        if(c == null) return false;
+        if(c == null || customer == null) return false;
         else {
 
             if(c.bookService(customer) == true){
-                Customer customer1 = customerRepository.findById(customer.getId()).orElse(null);
-                if(customer1 == null){
-                    customer.setCleaner(c);
-                    customerRepository.save(customer);
-                }
-                else {
-                   customerRepository.delete(customer1);
                    customer.setCleaner(c);
                    customerRepository.save(customer);
-                }
-                repository.delete(c);
-                repository.save(c);
-                return  true;
+                   repository.save(c);
+                   //System.out.println("List of customers for cleaner: "+c.getCustomers().stream().toList().toString());
+                   return  true;
             }
             return false;
         }
@@ -60,4 +57,11 @@ public class CleanerService {
 
     }
 
+    public void deleteCleaner(int id) {
+        Cleaner cleaner = repository.findById(id).orElse(null);
+        if (cleaner != null) {
+            repository.delete(cleaner);
+        }
+
+    }
 }
