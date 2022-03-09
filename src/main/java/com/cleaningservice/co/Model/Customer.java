@@ -1,6 +1,8 @@
 package com.cleaningservice.co.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,9 @@ public class Customer {
     private String cityOfResidence;
     private long phone_no;
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Cleaner.class)
-    private List<Cleaner> cleaners = new ArrayList<>();
+    @ElementCollection
+    //@JoinColumn(name = "name", nullable = false)
+    private List<String> cleaners = new ArrayList<>();
 
     public Customer(int id, String name, String cityOfResidence, long phone_no, String email) {
         this.id = id;
@@ -26,11 +29,11 @@ public class Customer {
         this.email = email;
     }
 
-    public List<Cleaner> getCleaner() {
+    public List<String> getCleaner() {
         return cleaners;
     }
 
-    public void setCleaner(Cleaner cleaner) {
+    public void setCleaner(String cleaner) {
         if (!cleaners.contains(cleaner)) {
             cleaners.add(cleaner);
         }

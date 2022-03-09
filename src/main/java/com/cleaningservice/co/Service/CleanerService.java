@@ -44,8 +44,8 @@ public class CleanerService {
         if(c == null || customer == null) return false;
         else {
 
-            if(c.bookService(customer) == true){
-                   customer.setCleaner(c);
+            if(c.bookService(customer.getName()) == true){
+                   customer.setCleaner(c.getName());
                    customerRepository.save(customer);
                    repository.save(c);
                    //System.out.println("List of customers for cleaner: "+c.getCustomers().stream().toList().toString());
