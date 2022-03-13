@@ -7,6 +7,7 @@ import com.cleaningservice.co.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -50,9 +51,21 @@ public class APIController {
     }
 
     @PostMapping(value = "/BookCleaning")
-    public boolean bookCleaning(@RequestParam int cleanerID, @RequestParam int customerID){
+    public String bookCleaning(@RequestParam int cleanerID, @RequestParam int customerID)  {
         return cleanerService.bookService(cleanerID,customerID);
     }
+
+    @PostMapping(value = "/EndService")
+    public String EndService(@RequestParam int cleanerID, @RequestParam int customerID)  {
+        return cleanerService.endService(cleanerID,customerID);
+    }
+
+    @PostMapping(value = "/DeleteCustomer")
+    public void deleteCustomer(@RequestParam int id) {
+        customerService.deleteCustomer(id);
+    }
+
+
 
 
 }

@@ -1,10 +1,9 @@
 package com.cleaningservice.co.Model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,8 +16,8 @@ public class Customer {
     private String cityOfResidence;
     private long phone_no;
     private String email;
+
     @ElementCollection
-    //@JoinColumn(name = "name", nullable = false)
     private List<String> cleaners = new ArrayList<>();
 
     public Customer(int id, String name, String cityOfResidence, long phone_no, String email) {
@@ -35,6 +34,7 @@ public class Customer {
 
     public void setCleaner(String cleaner) {
         if (!cleaners.contains(cleaner)) {
+
             cleaners.add(cleaner);
         }
     }

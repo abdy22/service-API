@@ -32,4 +32,9 @@ public class CustomerService {
     public void addCustomer(Customer customer) {
         repository.save(customer);
     }
+    public  void deleteCustomer(int id) {
+        Customer c = repository.findById(id).orElse(null);
+        if (c != null)
+            repository.delete(c);
+    }
 }

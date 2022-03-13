@@ -1,11 +1,9 @@
 package com.cleaningservice.co.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "Cleaners")
@@ -20,7 +18,7 @@ public class Cleaner {
     private double rating;
     //@Transient
     @ElementCollection
-    //@JoinColumn(name = "name", nullable = false)
+   // @JoinColumn(name = "name", nullable = false)
     private List<String> customers = new ArrayList<>();
 
 
